@@ -1,6 +1,33 @@
 #ifndef _MONTY_H_
 #define _MONTY_H_
 
+#include <stdio.h>
+#include <stddef.h>
+#include <string.h>
+#include <stdlib.h>
+#include <ctype.h>
+
+
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <stddef.h>
+#include <stdarg.h>
+#include <unistd.h>
+#include <sys/stat.h>
+#include <sys/wait.h>
+#include <unistd.h>
+
+
+
+
+#include <unistd.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <fcntl.h>
+
+
 
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
@@ -63,6 +90,15 @@ void push(stack_t **stack, unsigned int line_number);
 
 /*============== helper functions =========*/
 void (*get_func(char *code))(stack_t **stack, unsigned int line_number);
+
+/* doubly linked list functions */
+stack_t *add_dnodeint_end(stack_t **head, const int n);
+stack_t *add_dnodeint(stack_t **head, const int n);
+void free_dlistint(stack_t *head);
+
+/* main */
+void free_vglo(void);
+
 
 #endif
 
