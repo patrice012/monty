@@ -7,32 +7,19 @@
   * @line_number: new value to add to the stack
   */
 
-void push(stack_t **stack, unsigned int line_number)
+void push(stack_t **stack, UNUSED unsigned int line_number)
 {
-	int n, j;
+	int n;
 
 	if (!glob_var.arg)
-	{
-		fprintf(stderr, "L%u: ", line_number);
-		fprintf(stderr, "usage: push integer\n");
-		free_vglo();
-		exit(EXIT_FAILURE);
-	}
+		error_push_value();
 
-	for (j = 0; glob_var.arg[j] != '\0'; j++)
-	{
-		if (!isdigit(glob_var.arg[j]) && glob_var.arg[j] != '-')
-		{
-			fprintf(stderr, "L%u: ", line_number);
-			fprintf(stderr, "usage: push integer\n");
-			free_vglo();
-			exit(EXIT_FAILURE);
-		}
-	}
+	if (!is_numeric(glob_var.arg))
+		error_push_value();
 
 	n = atoi(glob_var.arg);
 
-	if (glob_var.data_type == 1)
+	if (glob_var.data_type == STACK)
 		add_dnodeint(stack, n);
 	else
 		add_dnodeint_end(stack, n);
