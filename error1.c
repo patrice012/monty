@@ -7,7 +7,7 @@
  */
 void error_file(char *file)
 {
-    fprintf(stderr, "Error: Can't open file %s\n", file);
+	fprintf(stderr, "Error: Can't open file %s\n", file);
 }
 
 /**
@@ -19,13 +19,12 @@ void error_file(char *file)
  */
 int error_instruction(char *opcode)
 {
-    unsigned int line_number = bus.counter;
-    char *s = _itoa(line_number);
+	unsigned int line_number = bus.counter;
+	char *s = _itoa(line_number);
 
-    fprintf(stderr, "L%s: unknown instruction\n", opcode);
-    free(s);
-
-    return (-1);
+	fprintf(stderr, "L%s: unknown instruction\n", opcode);
+	free(s);
+	return (-1);
 }
 
 
@@ -34,11 +33,11 @@ int error_instruction(char *opcode)
  */
 void error_pint(void)
 {
-    unsigned int line_number = bus.counter;
-    char *s = _itoa(line_number);
+	unsigned int line_number = bus.counter;
+	char *s = _itoa(line_number);
 
-    fprintf(stderr, "L%s: can't pint, stack empty\n", s);
-    free(s);
+	fprintf(stderr, "L%s: can't pint, stack empty\n", s);
+	free(s);
 }
 
 /**
@@ -46,11 +45,11 @@ void error_pint(void)
  */
 void error_push_value(void)
 {
-    unsigned int line_number = bus.counter;
-    char *s = _itoa(line_number);
+	unsigned int line_number = bus.counter;
+	char *s = _itoa(line_number);
 
-    fprintf(stderr, "L%s: usage: push integer\n", s);
-    free(s);
+	fprintf(stderr, "L%s: usage: push integer\n", s);
+	free(s);
 }
 
 
@@ -59,7 +58,7 @@ void error_push_value(void)
  */
 void error_pop(void)
 {
-    unsigned int line_number = bus.counter;
+	unsigned int line_number = bus.counter;
 
-    fprintf(stderr, "L%s: can't pop an empty stack\n", _itoa(line_number));
+	fprintf(stderr, "L%s: can't pop an empty stack\n", _itoa(line_number));
 }

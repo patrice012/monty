@@ -1,47 +1,31 @@
 #include "monty.h"
+/*bus_t bus = {NULL, NULL, NULL, 0};*/
 
 
-global_v glob_var;
+bus_t bus;
 
-void call_function_error(char *line);
-void process_input(char **lines);
-
-
-/**
- * free_vglo - frees the global variables
- *
- * Return: no return
- */
-void free_vglo(void)
-{
-	free_dlistint(glob_var.head);
-	free(glob_var.buffer);
-	/*fclose(glob_var.fd);*/
-}
 
 
 /**
  * init_global_var - initializes the global variables
- *
- * @fd: file descriptor
  * Return: no return
  */
-void init_global_var(FILE *fd)
+void init_global_var(void)
 {
-	glob_var.data_type = 1;
-	glob_var.cont = 1;
-	glob_var.arg = NULL;
-	glob_var.head = NULL;
-	glob_var.fd = fd;
-	glob_var.buffer = NULL;
+
+	bus.arg = NULL;
+	bus.file = NULL;
+	bus.content = NULL;
+	bus.counter = 0;
+	bus.lifi = 0;
 }
+
 
 /**
  * check_input - checks if the file exists and if the file can
  * be opened
  *
  * @argc: argument count
- * @argv: argument vector
  * Return: always 0
  */
 int check_input(int argc)
@@ -49,67 +33,71 @@ int check_input(int argc)
 	if (argc == 1 || argc > 2)
 	{
 		fprintf(stderr, "USAGE: monty file\n");
-		return(EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	}
 	return (0);
 }
 
-/**
- * main - main function
- * @argv: list of arguments
- * @argc: number of all argument
- * Return: always 0
- */
 
+/**
+ * process_file - updates file descriptor to read input from a file
+ *
+ * @file: the path to the file
+ * Return: 0 on success, otherwise error code
+ */
+int process_file(char *file)
+{
+	if (access(file, R_OK) == -1)
+	{
+		error_file(file);
+		return (EXIT_FAILURE);
+	}
+
+	bus.file = fopen(file, "r");
+	if (!bus.file)
+	{
+		error_file(file);
+		return (EXIT_FAILURE);
+	}
+	return (0);
+}
+
+
+
+/**
+* main - monty code interpreter
+* @argc: number of arguments
+* @argv: monty file location
+* Return: 0 on success
+*/
 int main(int argc, char *argv[])
 {
+	char *content;
+	/*FILE *file;*/
 	size_t size = 0;
-	FILE *fd;
-	ssize_t nlines = 0;
-	char *lines[2] = {NULL, NULL};
+	ssize_t read_line = 1;
+	stack_t *stack = NULL;
+	/*unsigned int counter = 0;*/
 
+	init_global_var();
 	if (check_input(argc) == EXIT_FAILURE)
-			return (EXIT_FAILURE);
-
+		return (EXIT_FAILURE);
 	if (process_file(argv[1]) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	fd = glob_var.fd;
-	init_global_var(fd);
 
-	/*nlines = _getline(&glob_var.buffer, &size, fd);*/
-	nlines = getline(&glob_var.buffer, &size, fd);
-	while (nlines != -1)
+	while (read_line > 0)
 	{
-		process_input(lines);
-		nlines = getline(&glob_var.buffer, &size, fd);
-		glob_var.cont++;
+		content = NULL;
+		read_line = getline(&content, &size, bus.file);
+		bus.content = content;
+		bus.counter++;
+		if (read_line > 0)
+		{
+			execute(content, &stack, bus.file);
+		}
+		free(content);
 	}
-
-	/*free_vglo();*/
-	return (0);
+	free_stack(stack);
+	fclose(bus.file);
+return (0);
 }
-
-/**
- * process_input - execute input
- * @lines: array of data
- */
-
-void process_input(char **lines)
-{
-	void (*func)(stack_t **stack, unsigned int line_number);
-	char *opcode = NULL, *value = NULL;
-
-
-	parse_instruction(glob_var.buffer, &opcode, &value);
-
-	lines[0] = strtok(glob_var.buffer, " \t\n");
-	if (lines[0] && lines[0][0] != '#')
-	{
-		func = get_func(lines[0]);
-		if (!func)
-			call_function_error(lines[0]);
-		glob_var.arg = strtok(NULL, " \t\n");
-		func(&glob_var.head, glob_var.cont);
-	}
-}
-

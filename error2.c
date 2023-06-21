@@ -5,8 +5,8 @@
  */
 void error_malloc(void)
 {
-    fprintf(stderr, "Error: malloc failed\n");
-    exit(EXIT_FAILURE);
+	fprintf(stderr, "Error: malloc failed\n");
+	exit(EXIT_FAILURE);
 }
 
 /**
@@ -18,15 +18,15 @@ void error_malloc(void)
  */
 int error_short_stack(char *opcode)
 {
-    unsigned int line_number = bus.counter;
-    char *msg;
+	unsigned int line_number = bus.counter;
+	char *msg;
 
-    if (strcmp(opcode, "pchar") == 0)
-        msg = ", stack empty";
-    else
-        msg = ", stack too short";
-    fprintf(stderr, "L%s: can't %s %s\n", _itoa(line_number), opcode, msg);
-    return (-1);
+	if (strcmp(opcode, "pchar") == 0)
+		msg = ", stack empty";
+	else
+		msg = ", stack too short";
+	fprintf(stderr, "L%s: can't %s %s\n", _itoa(line_number), opcode, msg);
+	return (-1);
 }
 
 /**
@@ -36,10 +36,10 @@ int error_short_stack(char *opcode)
  */
 int error_div_zero(void)
 {
-    unsigned int line_number = bus.counter;
+	unsigned int line_number = bus.counter;
 
-    fprintf(stderr, "L%s: division by zero\n", _itoa(line_number));
-    return (-1);
+	fprintf(stderr, "L%s: division by zero\n", _itoa(line_number));
+	return (-1);
 }
 
 /**
@@ -49,22 +49,23 @@ int error_div_zero(void)
  */
 int error_pchar(void)
 {
-    unsigned int line_number = bus.counter;
-    
-    fprintf(stderr, "L%s: can't pchar, value out of range\n", _itoa(line_number));
-    return (-1);
+	unsigned int line_number = bus.counter;
+
+	fprintf(stderr, "L%s: can't pchar, value out of range\n", _itoa(line_number));
+	return (-1);
 }
 
 
 /**
- * call_error - fail to call function
+ * call_function_error - fail to call function
+ * @line: line message
  * @line: line message
  */
 
 void call_function_error(char *line)
 {
-    fprintf(stderr, "L%u: ", bus.counter);
-    fprintf(stderr, "unknown instruction %s\n", line);
-    /*free_vglo();*/
-    exit(EXIT_FAILURE);
+	fprintf(stderr, "L%u: ", bus.counter);
+	fprintf(stderr, "unknown instruction %s\n", line);
+	/*free_vglo();*/
+	exit(EXIT_FAILURE);
 }
