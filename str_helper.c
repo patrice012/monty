@@ -11,31 +11,31 @@ int digits(int num);
  */
 char *_itoa(int num)
 {
-    char *buffer;
-    int num_digits = digits(num);
-    unsigned int n;
+	char *buffer;
+	int num_digits = digits(num);
+	unsigned int n;
 
-    buffer = malloc(sizeof(char) * (num_digits + 1));
-    if (buffer == NULL)
-        error_malloc();
-    buffer[num_digits] = '\0';
+	buffer = malloc(sizeof(char) * (num_digits + 1));
+	if (buffer == NULL)
+		error_malloc();
+	buffer[num_digits] = '\0';
 
-    if (num < 0)
-    {
-        n = num * -1;
-        buffer[0] = '-';
-    }
-    else
-        n = num;
+	if (num < 0)
+	{
+		n = num * -1;
+		buffer[0] = '-';
+	}
+	else
+		n = num;
 
-    num_digits--;
-    do {
-        buffer[num_digits] = (n % 10) + '0';
-        n /= 10;
-        num_digits--;
-    } while (n > 0);
+	num_digits--;
+	do {
+		buffer[num_digits] = (n % 10) + '0';
+		n /= 10;
+		num_digits--;
+	} while (n > 0);
 
-    return (buffer);
+	return (buffer);
 }
 
 /**
@@ -46,24 +46,23 @@ char *_itoa(int num)
  */
 int digits(int num)
 {
-    unsigned int num1;
-    int len = 1;
+	unsigned int num1;
+	int len = 1;
 
-    if (num < 0)
-    {
-        len++;
-        num1 = num * -1;
-    }
-    else
-        num1 = num;
+	if (num < 0)
+	{
+		len++;
+		num1 = num * -1;
+	}
+	else
+		num1 = num;
 
-    while (num1 > 9)
-    {
-        len++;
-        num1 /= 10;
-    }
-
-    return (len);
+	while (num1 > 9)
+	{
+		len++;
+		num1 /= 10;
+	}
+	return (len);
 }
 
 /**
@@ -76,23 +75,22 @@ int digits(int num)
  */
 int is_numeric(char *s)
 {
-    if (s == NULL)
-        return (0);
+	if (s == NULL)
+		return (0);
 
-    if (strlen(s) == 0)
-        return (0);
+	if (strlen(s) == 0)
+		return (0);
 
-    if (s[0] == '-' || s[0] == '+')
-        s++;
+	if (s[0] == '-' || s[0] == '+')
+		s++;
 
-    while (*s != '\0')
-    {
-        if (!is_digit(*s))
-            return (0);
-        s++;
-    }
-
-    return (1);
+	while (*s != '\0')
+	{
+		if (!is_digit(*s))
+			return (0);
+		s++;
+	}
+	return (1);
 }
 
 /**
@@ -104,5 +102,5 @@ int is_numeric(char *s)
  */
 int is_digit(char c)
 {
-    return (c >= '0' && c <= '9');
+	return (c >= '0' && c <= '9');
 }

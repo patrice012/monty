@@ -1,26 +1,37 @@
 #include "monty.h"
-
-
 /**
-  * push - pushes an element to the stack.
-  * @stack: stack data type
-  * @line_number: new value to add to the stack
-  */
-
-void push(stack_t **stack, UNUSED unsigned int line_number)
+ * f_push - add node to the stack
+ * @head: stack head
+ * @counter: line_number
+ * Return: no return
+*/
+void f_push(stack_t **head, unsigned int counter)
 {
-	int n;
+	int n, j = 0, flag = 0;
 
-	if (!glob_var.arg)
-		error_push_value();
-
-	if (!is_numeric(glob_var.arg))
-		error_push_value();
-
-	n = atoi(glob_var.arg);
-
-	if (glob_var.data_type == STACK)
-		add_dnodeint(stack, n);
+	if (bus.arg)
+	{
+		if (bus.arg[0] == '-')
+			j++;
+		for (; bus.arg[j] != '\0'; j++)
+		{
+			if (bus.arg[j] > 57 || bus.arg[j] < 48)
+				flag = 1; }
+		if (flag == 1)
+		{ fprintf(stderr, "L%d: usage: push integer\n", counter);
+			fclose(bus.file);
+			free(bus.content);
+			free_stack(*head);
+			exit(EXIT_FAILURE); }}
 	else
-		add_dnodeint_end(stack, n);
+	{ fprintf(stderr, "L%d: usage: push integer\n", counter);
+		fclose(bus.file);
+		free(bus.content);
+		free_stack(*head);
+		exit(EXIT_FAILURE); }
+	n = atoi(bus.arg);
+	if (bus.lifi == 0)
+		addnode(head, n);
+	else
+		addqueue(head, n);
 }
