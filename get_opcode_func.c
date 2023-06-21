@@ -20,14 +20,13 @@ int get_len(size_t arr_size, instruction_t f)
 
 void (*get_func(char *code))(stack_t **stack, unsigned int line_number)
 {
-	int len, i;
+	int i;
 
 	instruction_t func[] = {
 		{"push", push},
 	};
 
-	len = get_len(sizeof(func), func[0]);
-	for (i = 0; i < len && func[i].opcode; i++)
+	for (i = 0; func[i].opcode; i++)
 	{
 		if (strcmp(func[i].opcode, code) == 0)
 			return (func[i].f);
