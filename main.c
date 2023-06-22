@@ -1,6 +1,7 @@
 #include "monty.h"
 #include "lists.h"
 
+
 data_t data = DATA_INIT;
 
 /**
@@ -17,17 +18,7 @@ void monty(args_t *args)
 	int get = 0;
 	void (*code_func)(stack_t **, unsigned int);
 
-	if (args->ac != 2)
-	{
-		dprintf(STDERR_FILENO, USAGE);
-		exit(EXIT_FAILURE);
-	}
-	data.fptr = fopen(args->av, "r");
-	if (!data.fptr)
-	{
-		dprintf(STDERR_FILENO, FILE_ERROR, args->av);
-		exit(EXIT_FAILURE);
-	}
+	process_file(args);
 	while (1)
 	{
 		args->line_number++;
@@ -43,11 +34,7 @@ void monty(args_t *args)
 		}
 		code_func = get_func(data.words);
 		if (!code_func)
-		{
-			dprintf(STDERR_FILENO, UNKNOWN, args->line_number, data.words[0]);
-			free_all(1);
-			exit(EXIT_FAILURE);
-		}
+			code_error(args->line_number);
 		code_func(&(data.stack), args->line_number);
 		free_all(0);
 	}

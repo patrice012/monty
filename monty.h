@@ -8,6 +8,10 @@
 #include <ctype.h>
 #include <unistd.h>
 
+#include "error.h"
+
+#define UNUSED __attribute__((unused))
+
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
  * @n: integer
@@ -53,6 +57,8 @@ typedef struct args_s
 	int ac;
 	unsigned int line_number;
 } args_t;
+
+void error_file(args_t *args);
 
 /**
  * struct data_s - extern data to access inside functions
@@ -132,5 +138,8 @@ void free_everything(char **args);
 
 /* free.c */
 void free_all(int all);
+
+/* helper */
+int process_file(args_t *args);
 
 #endif
