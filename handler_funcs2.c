@@ -14,22 +14,14 @@ void sub_handler(stack_t **stack, unsigned int line_number)
 	stack_t *node_1 = get_dnodeint_at_index(*stack, 1);
 
 	if (dlistint_len(*stack) < 2)
-	{
-		dprintf(STDERR_FILENO, SUB_FAIL, line_number);
-		free_all(1);
-		exit(EXIT_FAILURE);
-	}
+		error_sub_fail(line_number);
 
 	sub = node_1->n - node_0->n;
 	delete_dnodeint_at_index(stack, 0);
 	delete_dnodeint_at_index(stack, 0);
 	node = add_dnodeint(stack, sub);
 	if (!node)
-	{
-		dprintf(STDERR_FILENO, MALLOC_FAIL);
-		free_all(1);
-		exit(EXIT_FAILURE);
-	}
+		malloc_fail();
 }
 
 /**
@@ -45,29 +37,17 @@ void div_handler(stack_t **stack, unsigned int line_number)
 	stack_t *node_1 = get_dnodeint_at_index(*stack, 1);
 
 	if (dlistint_len(*stack) < 2)
-	{
-		dprintf(STDERR_FILENO, DIV_FAIL, line_number);
-		free_all(1);
-		exit(EXIT_FAILURE);
-	}
+		error_div_fail(line_number);
 
 	if (node_0->n == 0)
-	{
-		dprintf(STDERR_FILENO, DIV_ZERO, line_number);
-		free_all(1);
-		exit(EXIT_FAILURE);
-	}
+		error_zero_division(line_number);
 
 	div = node_1->n / node_0->n;
 	delete_dnodeint_at_index(stack, 0);
 	delete_dnodeint_at_index(stack, 0);
 	node = add_dnodeint(stack, div);
 	if (!node)
-	{
-		dprintf(STDERR_FILENO, MALLOC_FAIL);
-		free_all(1);
-		exit(EXIT_FAILURE);
-	}
+		swap_fail(line_number);
 }
 
 /**
@@ -83,22 +63,13 @@ void mul_handler(stack_t **stack, unsigned int line_number)
 	stack_t *node_1 = get_dnodeint_at_index(*stack, 1);
 
 	if (dlistint_len(*stack) < 2)
-	{
-		dprintf(STDERR_FILENO, MUL_FAIL, line_number);
-		free_all(1);
-		exit(EXIT_FAILURE);
-	}
-
+		error_mul_fail(line_number);
 	mul = node_1->n * node_0->n;
 	delete_dnodeint_at_index(stack, 0);
 	delete_dnodeint_at_index(stack, 0);
 	node = add_dnodeint(stack, mul);
 	if (!node)
-	{
-		dprintf(STDERR_FILENO, MALLOC_FAIL);
-		free_all(1);
-		exit(EXIT_FAILURE);
-	}
+		swap_fail(line_number);
 }
 
 /**
@@ -114,27 +85,15 @@ void mod_handler(stack_t **stack, unsigned int line_number)
 	stack_t *node_1 = get_dnodeint_at_index(*stack, 1);
 
 	if (dlistint_len(*stack) < 2)
-	{
-		dprintf(STDERR_FILENO, MOD_FAIL, line_number);
-		free_all(1);
-		exit(EXIT_FAILURE);
-	}
+		error_mod_fail(line_number);
 
 	if (node_0->n == 0)
-	{
-		dprintf(STDERR_FILENO, DIV_ZERO, line_number);
-		free_all(1);
-		exit(EXIT_FAILURE);
-	}
+		error_zero_division(line_number);
 
 	mod = node_1->n % node_0->n;
 	delete_dnodeint_at_index(stack, 0);
 	delete_dnodeint_at_index(stack, 0);
 	node = add_dnodeint(stack, mod);
 	if (!node)
-	{
-		dprintf(STDERR_FILENO, MALLOC_FAIL);
-		free_all(1);
-		exit(EXIT_FAILURE);
-	}
+		swap_fail(line_number);
 }
