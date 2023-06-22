@@ -1,170 +1,42 @@
-# Monty Project - ALX SE Program
+# 0x19. C - Stacks, Queues - LIFO, FIFO
+> **Holberton Proyect - Week 17**
+***
 
-This is a project developed as part of [ALX SE Program](https://www.alxafrica.com/). It is an interpreter for Monty Bytecode files. The Monty language is a simple programming language that uses stack and queue data structures for its operations. This project was written in C.
+### What do LIFO and FIFO mean?
+* FIFO (“First In, First Out”) `: means “first in, first out”. For example, this system is ideal for the storage of perishable producers, which in addition to their placement by ranges or families, must be placed in such a way that the first to come out are the closest to their expiration date. There are also the LILO ("Last In, Last Out").
 
-## Interactive Interpreter
-(Branch: `interactive-interpreter`)
+* LIFO (“Last In, First Out”) `: means “last in, first out”. For example, this is the perfect system for non-perishable products that do not have an expiration date. There are also the FILO ("First In, Last Out").
 
-In the `interactive-interpreter` branch, an interactive mode has been implemented, allowing users to execute Monty instructions directly from the command line without the need for a Monty Bytecode file. This interactive interpreter provides a prompt where users can type Monty instructions and see the results immediately.
+### What is a stack, and when to use it?
+* Stack is a structure where we store data and use it in 2 ways FILO (First-in Last-out) and LIFO (Last-in First-out) where a stack is first accumulated and the data is removed from the last input. Use a battery when you want to take things out in the reverse order you put them in.
 
-[Screencast from 2023-06-01 14-52-10.webm](https://github.com/Ahmedsaed/monty/assets/37080003/fdef1653-6274-4259-b3cf-d03a89ffed7a)
+### What is a queue, and when to use it?
+* Queue is a data structure and we use it in 2 ways FIFO (First-in First-out) and LILO (Last-in Last-out) where first it is accumulating in the queue and the data is removed from the first input. Use a tail when you want to take things out in the order you put them in.
+        
+### What are the common implementations of stacks and queues?
+> More information:
+        [Stack and Queue](https://es.slideshare.net/nieves1988/estructura-datos-pilas-y-colas)
 
-To use the interactive interpreter, follow these steps:
+`STACKS`: Arithmetic Expressions, Operations (Power, Multiplication, Divide, Addition, Subtraction, Infix Notation, Prefix Notation, Postfix Notation), Recursive Functions, Program Sequence Control (A subprogram runs completely before returning to the point where it was called).
 
-1. Switch to the `interactive-interpreter` branch by running the following command:
-```bash
-git checkout interactive-interpreter
-```
 
-2. Compile and run the program by typing the following command:
-```bash
-make build run
-```
+`QUEUES`: There are 4 types of Queues:
 
-3. The program will display a prompt where you can type Monty instructions. Here's an example:
-```bash
-$ ./monty
-In [1]: push 1
-In [2]: push 2
-In [3]: pall
-2
-1
-In [4]: add
-In [5]: pall
-3
-```
+  * `Simple Tail`: Linear structure where the elements leave in the same order in which they arrive.
 
-## Usage
+  * `Circular Tail`: Logical Representation of a Simple Queue in an Array
 
-To use the Monty program, follow these steps:
+  * `Priority Queue`: Linear structure in which the elements are inserted in any position of the queue and are removed only from the front.
+        
+  * `Double Tail`: Linear structure in which elements can be added or removed at either end of the tail.
 
-1. Clone the repository from GitHub to your local machine:
-```bash
-git clone https://github.com/Ahmedsaed/monty.git
-```
+  **Queue Implementation**: Arrangement, Linked Lists.
 
-2. Compile the program by running the following command:
-```
-gcc -Wall -Werror -Wextra -pedantic *.c -o monty
-```
+### What are the most common use cases of stacks and queues?
+ * `STACKS`: Arithmetic Expressions, Operations, Recursive Functions, Program Sequence Control.
+ * `QUEUES`: Arrangement, Linked Lists.
 
-3. Run the program by typing the following command:
-   `./monty file.m`
+### What is the proper way to use global variables?
+Global variables should be used when multiple functions need to access the data or write to an object. For example, if you had to pass data or a reference to multiple functions such as a single log file, a connection pool, or a hardware reference that needs to be accessed across the application. This prevents very long function declarations and large allocations of duplicated data.
 
-   Replace `file.m` with the path to the Monty Bytecode file you want to execute.
-
-4. The program will read the instructions from the Monty Bytecode file and execute them accordingly.
-
-## Makefile Usage
-
-We have provided a Makefile that can be used to automate various tasks such as checking the code style, compiling the program, running tests, and more.
-
-To use the Makefile, open a terminal and navigate to the project directory. Then, type `make` followed by the recipe you want to run. Here's a list of the available recipes:
-
-- `all`: This is the default recipe and it checks for code style issues, compiles the program, run unit and integration tests and checks for memory leaks.
-
-- `check_style`: This recipe checks the code style of all C files in the project using the Betty style checker. This requires the `betty-style` and `betty-doc` programs to be installed.
-
-- `build`: This recipe compiles the shell. It generates an executable file called `shell.out`.
-
-- `run_tests`: This recipe runs unit and integration tests on the shell. The integration tests requires `python 3` to be installed
-
-- `check_memory`: This recipe checks for memory leaks and errors using Valgrind. It requires the `Valgrind` program to be installed.
-
-Note that some of the recipes require specific programs to be installed, such as `valgrind`, `betty-style`, and `betty-doc`. If you encounter any errors when running the Makefile, make sure that these programs are installed on your system.
-
-To run a recipe, type `make` followed by the recipe name. For example, to compile the program, type:
-
-```bash
-make build
-```
-
-This will generate an executable file called monty. To run the program, type:
-
-```bash
-make run
-```
-
-To run all the recipes, type:
-
-```bash
-make [all]
-```
-
-where `all` is optional.
-
-## Monty Bytecode Instructions
-
-The Monty language uses a set of instructions that can be used in Monty Bytecode files. Here are some examples of the supported instructions:
-
-| Instruction | Description                                                          |
-|-------------|----------------------------------------------------------------------|
-| `push <int>`| Pushes an element onto the stack.                                     |
-| `pall`      | Prints all the values on the stack.                                   |
-| `pint`      | Prints the value at the top of the stack.                             |
-| `pop`       | Removes the top element from the stack.                               |
-| `swap`      | Swaps the top two elements of the stack.                              |
-| `add`       | Adds the top two elements of the stack.                               |
-| `sub`       | Subtracts the top element from the second element of the stack.       |
-| `mul`       | Multiplies the top two elements of the stack.                         |
-| `div`       | Divides the second element by the top element of the stack.           |
-| `mod`       | Computes the modulus of the second element by the top element of the stack. |
-| `pchar`     | Prints the character value of the top element of the stack.           |
-| `pstr`      | Prints the string contained in the stack.                             |
-| `rotl`      | Rotates the stack to the top.                                         |
-| `rotr`      | Rotates the stack to the bottom.                                      |
-| `stack`     | Sets the format of the data to a stack (default behavior).            |
-| `queue`     | Sets the format of the data to a queue.                               |
-
-Note: `<int>` represents an integer value.
-## Examples
-
-Here are some examples of how to use the Monty program:
-
-- Push values onto the stack and print them:
-
-```bash
-$ cat bytecodes/00.m
-push 1
-push 2
-push 3
-pall
-$ ./monty bytecodes.m
-3
-2
-1
-```
-
-- Perform arithmetic operations:
-
-```bash
-$ cat bytecodes.m
-push 1
-push 2
-add
-push 5
-mul
-pall
-$ ./monty bytecodes.m
-10
-1
-```
-
-- Manipulate the stack::
-
-```bash
-$ cat bytecodes.m
-push 1
-push 2
-push 3
-swap
-pall
-$ ./monty bytecodes.m
-2
-3
-1
-```
-
-# Authors
-
-This program was developed by [Ahmed Saed](https://www.github.com/Ahmedsaed) as part of the ALX SE Program.
+You should typically not use global variables unless absolutely necessary because global variables are only cleaned up when explicitly told to do so or your program ends. If you are running a multi-threaded application, multiple functions can write to the variable at the same time. If you have a bug, tracking that bug down can be more difficult because you don't know which function is changing the variable. You also run into the problem of naming conflicts unless you use a naming convention that explicitly gives global variables a unique name.
