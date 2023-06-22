@@ -2,6 +2,18 @@
 #include "lists.h"
 
 /**
+ * get_len - get the length of array
+ * @size: array size
+ * @uniq_size: data size
+ * Return: int => the size of array
+ */
+
+int get_len(ssize_t size, int uniq_size)
+{
+	return (size / uniq_size);
+}
+
+/**
  * get_func - selects the right function
  * @parsed: line from the bytecode file passed to main
  *
@@ -9,6 +21,8 @@
  */
 void (*get_func(char **parsed))(stack_t **, unsigned int)
 {
+	int codes, i;
+
 	instruction_t func_arr[] = {
 		{"push", push_handler},
 		{"pall", pall_handler},
@@ -30,9 +44,9 @@ void (*get_func(char **parsed))(stack_t **, unsigned int)
 		{NULL, NULL}
 	};
 
-	int codes = 17, i;
+	codes = get_len(sizeof(func_arr), sizeof(func_arr[0]));
 
-	for (i = 0; i < codes; i++)
+	for (i = 0; i < codes && func_arr[i].opcode; i++)
 	{
 		if (strcmp(func_arr[i].opcode, parsed[0]) == 0)
 		{
